@@ -1,8 +1,14 @@
+# from openpyxl import Workbook
+# nfc_east = ('DAL', 'WAS', 'PHI', 'NYG')
+# wb = Workbook()
+# ws = wb.active
+# for row, i in enumerate(nfc_east):
+#     column_cell = 'A'
+#     ws[column_cell+str(row+2)] = str(i)
+#
+# # Save the file
+# wb.save("sample.xlsx")
 
-
-if __name__ == '__main__':
-    a = [3, 7, 4]
-    b = [4, 2]
-    c = []
-    if a[2] not in b:
-        print 'berhasil'
+a = [1, 5, 3, 2, 6]
+d = a.count(1)
+print d
