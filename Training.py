@@ -1,10 +1,8 @@
 from __future__ import division
-from openpyxl import Workbook
-
 import Preprocessing
 import glob
 import re
-
+import csv
 
 def loadData(location):
     bag = []
@@ -19,6 +17,7 @@ def loadData(location):
     pre = Preprocessing.Preprocessing()
     bag = pre.stopwordRemoval(bag)
     bag = pre.lemmatization(bag)
+    n += 1
     return bag, n
 
 def likelihoodProbabilities(list, bag):
@@ -39,25 +38,49 @@ def saveToExcel(ws, column_cell, list, string):
 
 
 if __name__ == '__main__':
-    sport, nSport = loadData('bbc-2/sport/*')
-    business, nBusiness = loadData('bbc-2/business/*')
-    politics, nPolitics = loadData('bbc-2/politics/*')
-    entertainment, nEntertainment = loadData('bbc-2/entertainment/*')
-    tech, nTech = loadData('bbc-2/tech/*')
+    print "Load data",
+    sport, nSport = loadData('bbc-2/sport/*'); print ".",
+    business, nBusiness = loadData('bbc-2/business/*'); print ".",
+    politics, nPolitics = loadData('bbc-2/politics/*'); print ".",
+    entertainment, nEntertainment = loadData('bbc-2/entertainment/*'); print ".",
+    tech, nTech = loadData('bbc-2/tech/*'); print "."
+
+    print "Training",
+    # Prior
+    n = nSport + nBusiness + nPolitics + nEntertainment + nTech
+    nSport /= n
+    nBusiness /= n
+    nPolitics /= n
+    nEntertainment /= n
+    nTech /= n
+
+    # Likelihood
     bag = sport + business + politics + entertainment + tech
     wordList = list(set(bag))
-    likelihoodSport = likelihoodProbabilities(wordList, sport)
-    likelihoodBusiness = likelihoodProbabilities(wordList, business)
-    likelihoodPolitics = likelihoodProbabilities(wordList, politics)
-    likelihoodEntertainment = likelihoodProbabilities(wordList, entertainment)
-    likelihoodTech = likelihoodProbabilities(wordList, tech)
+    likelihoodSport = likelihoodProbabilities(wordList, sport); print ".",
+    likelihoodBusiness = likelihoodProbabilities(wordList, business); print ".",
+    likelihoodPolitics = likelihoodProbabilities(wordList, politics); print ".",
+    likelihoodEntertainment = likelihoodProbabilities(wordList, entertainment); print ".",
+    likelihoodTech = likelihoodProbabilities(wordList, tech); print "."
 
-    wb = Workbook()
-    ws = wb.active
-    saveToExcel(ws, 'A', wordList, "wordlist")
-    saveToExcel(ws, 'B', likelihoodSport, "sport")
-    saveToExcel(ws, 'C', likelihoodBusiness, "business")
-    saveToExcel(ws, 'D', likelihoodPolitics, "politics")
-    saveToExcel(ws, 'E', likelihoodEntertainment, "entertainment")
-    saveToExcel(ws, 'F', likelihoodTech, "tech")
-    wb.save("sample.xlsx")
+    temp = []
+
+    print "\nSaving data . . . ."
+
+    with open("Prior.csv", "wb") as f:
+        writer = csv.writer(f)
+        writer.writerows([['prior']])
+        writer.writerows([[nSport]])
+        writer.writerows([[nBusiness]])
+        writer.writerows([[nPolitics]])
+        writer.writerows([[nEntertainment]])
+        writer.writerows([[nTech]])
+    f.close
+
+    for i in range(len(wordList)):
+        temp.append([wordList[i], likelihoodSport[i], likelihoodBusiness[i], likelihoodPolitics[i], likelihoodEntertainment[i], likelihoodTech[i]])
+    with open("Likelihood.csv", "wb") as f:
+        writer = csv.writer(f)
+        writer.writerows([['words', 'sport', 'business', 'politic', 'entertainment', 'tech']])
+        writer.writerows(temp)
+    f.close
