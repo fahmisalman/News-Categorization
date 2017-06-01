@@ -8,6 +8,9 @@ class Preprocessing(object):
     def __init__(self):
         self
 
+    def tokenisasi(self, sentence):
+        return sentence.split()
+
     def lemmatization(self, token):
         lemma = WordNetLemmatizer()
         stemmer = PorterStemmer()
