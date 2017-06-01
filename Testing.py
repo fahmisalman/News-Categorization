@@ -25,36 +25,29 @@ def loadDataTrain():
 if __name__ == '__main__':
     words, likelihood, prior = loadDataTrain()
     pre = Preprocessing.Preprocessing()
-    x = '''[ENTERTAIMENT]
+    x = '''West End to honour finest shows
 
-Gallery unveils interactive tree
+The West End is honouring its finest stars and shows at the Evening Standard Theatre Awards in London on Monday.
 
-A Christmas tree that can receive text messages has been unveiled at London's Tate Britain art gallery.
+The Producers, starring Nathan Lane and Lee Evans, is up for best musical at the ceremony at the National Theatre. It is competing against Sweeney Todd and A Funny Thing Happened on the Way to the Forum for the award. The Goat or Who is Sylvia? by Edward Albee, The Pillowman by Martin McDonagh and Alan Bennett's The History Boys are shortlisted in the best play category.
 
-The spruce has an antenna which can receive Bluetooth texts sent by visitors to the Tate. The messages will be "unwrapped" by sculptor Richard Wentworth, who is responsible for decorating the tree with broken plates and light bulbs. It is the 17th year that the gallery has invited an artist to dress their Christmas tree. Artists who have decorated the Tate tree in previous years include Tracey Emin in 2002.
+Pam Ferris, Victoria Hamilton and Kelly Reilly are nominated for best actress. Ferris - best known for her television roles in programmes such as The Darling Buds of May - has made the shortlist for her role in Notes on Falling Leaves, at the Royal Court Theatre. Meanwhile, Richard Griffiths, who plays Hector in The History Boys at the National Theatre, will battle it out for the best actor award with Douglas Hodge (Dumb Show) and Stanley Townsend (Shining City). The best director shortlist includes Luc Bondy for Cruel and Tender, Simon McBurney for Measure for Measure, and Rufus Norris for Festen.
 
-The plain green Norway spruce is displayed in the gallery's foyer. Its light bulb adornments are dimmed, ordinary domestic ones joined together with string. The plates decorating the branches will be auctioned off for the children's charity ArtWorks. Wentworth worked as an assistant to sculptor Henry Moore in the late 1960s. His reputation as a sculptor grew in the 1980s, while he has been one of the most influential teachers during the last two decades. Wentworth is also known for his photography of mundane, everyday subjects such as a cigarette packet jammed under the wonky leg of a table.
+Festen is also shortlisted in the best designer category where Ian MacNeil, Jean Kalman and Paul Arditti will be up against Hildegard Bechtler, for Iphigenia at Aulis, and Paul Brown, for False Servant. The Milton Shulman Award for outstanding newcomer will be presented to Dominic Cooper (His Dark Materials and The History Boys), Romola Garai (Calico), Eddie Redmayne (The Goat, or Who is Sylvia?) or Ben Wishaw (Hamlet). And playwrights David Eldridge, Rebecca Lenkiewicz and Owen McCafferty will fight it out for The Charles Wintour Award and a 30,000 bursary. Three 50th Anniversary Special Awards will also be presented to an institution, a playwright and an individual.
 '''
-    x = x.lower()
-    x = re.sub(r'[^a-z]', ' ', x)
+    x = pre.caseFolding(x)
     x = pre.tokenisasi(x)
     x = pre.stopwordRemoval(x)
     x = pre.lemmatization(x)
-    # print x
     probs = []
     for j in range(len(prior)):
-        tmp = 1
+        tmp = 0
         for i in range(len(x)):
             if x[i] in words:
-                # print x[i]
-                # print tmp
                 temp = words.index(x[i])
-                tmp *= math.log(likelihood[temp][j])
-        tmp *= prior[j]
+                tmp += math.log(likelihood[temp][j])
+        tmp += math.log(prior[j])
         probs.append(tmp)
-    # print probs
-    # probs.sort(reverse=True)
-    # print probs
     higher = sorted(range(len(probs)), key=lambda k: probs[k], reverse=True)
     if higher[0] == 0:
         print "sport"
@@ -66,6 +59,3 @@ The plain green Norway spruce is displayed in the gallery's foyer. Its light bul
         print "entertainment"
     elif higher[0] == 4:
         print "tech"
-    # print words
-    # print likelihood
-    # print prior

@@ -8,6 +8,11 @@ class Preprocessing(object):
     def __init__(self):
         self
 
+    def caseFolding(self, sentence):
+        sentence = sentence.lower()
+        sentence = re.sub(r'[^a-z]', ' ', sentence)
+        return sentence
+
     def tokenisasi(self, sentence):
         return sentence.split()
 
