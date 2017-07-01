@@ -38,14 +38,14 @@ def saveToExcel(ws, column_cell, list, string):
 
 
 if __name__ == '__main__':
-    print "Load data",
+    print "Load data .",
     sport, nSport = loadData('bbc-2/sport/*'); print ".",
     business, nBusiness = loadData('bbc-2/business/*'); print ".",
     politics, nPolitics = loadData('bbc-2/politics/*'); print ".",
     entertainment, nEntertainment = loadData('bbc-2/entertainment/*'); print ".",
     tech, nTech = loadData('bbc-2/tech/*'); print "."
 
-    print "Training",
+    print "Training .",
     # Prior
     n = nSport + nBusiness + nPolitics + nEntertainment + nTech
     nSport /= n
@@ -75,7 +75,6 @@ if __name__ == '__main__':
         writer.writerows([[nPolitics]])
         writer.writerows([[nEntertainment]])
         writer.writerows([[nTech]])
-    f.close
 
     for i in range(len(wordList)):
         temp.append([wordList[i], likelihoodSport[i], likelihoodBusiness[i], likelihoodPolitics[i], likelihoodEntertainment[i], likelihoodTech[i]])
@@ -83,4 +82,3 @@ if __name__ == '__main__':
         writer = csv.writer(f)
         writer.writerows([['words', 'sport', 'business', 'politic', 'entertainment', 'tech']])
         writer.writerows(temp)
-    f.close
