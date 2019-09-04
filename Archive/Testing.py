@@ -62,19 +62,19 @@ if __name__ == '__main__':
     words, likelihood, prior = loadDataTrain()
     correct = 0
     total = 0
-    benar, jumlah = loadData(words, likelihood, prior, 'bbc-2/sport/*', 'sport'); print ".",
+    benar, jumlah = loadData(words, likelihood, prior, 'Dataset/sport/*', 'sport'); print ".",
     correct += benar
     total += jumlah
-    benar, jumlah = loadData(words, likelihood, prior, 'bbc-2/business/*', 'business'); print ".",
+    benar, jumlah = loadData(words, likelihood, prior, 'Dataset/business/*', 'business'); print ".",
     correct += benar
     total += jumlah
-    benar, jumlah = loadData(words, likelihood, prior, 'bbc-2/politics/*', 'politic'); print ".",
+    benar, jumlah = loadData(words, likelihood, prior, 'Dataset/politics/*', 'politic'); print ".",
     correct += benar
     total += jumlah
-    benar, jumlah = loadData(words, likelihood, prior, 'bbc-2/entertainment/*', 'entertainment'); print ".",
+    benar, jumlah = loadData(words, likelihood, prior, 'Dataset/entertainment/*', 'entertainment'); print ".",
     correct += benar
     total += jumlah
-    benar, jumlah = loadData(words, likelihood, prior, 'bbc-2/tech/*', 'tech'); print "."
+    benar, jumlah = loadData(words, likelihood, prior, 'Dataset/tech/*', 'tech'); print "."
     correct += benar
     total += jumlah
 

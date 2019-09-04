@@ -39,11 +39,11 @@ def saveToExcel(ws, column_cell, list, string):
 
 if __name__ == '__main__':
     print "Load data .",
-    sport, nSport = loadData('bbc-2/sport/*'); print ".",
-    business, nBusiness = loadData('bbc-2/business/*'); print ".",
-    politics, nPolitics = loadData('bbc-2/politics/*'); print ".",
-    entertainment, nEntertainment = loadData('bbc-2/entertainment/*'); print ".",
-    tech, nTech = loadData('bbc-2/tech/*'); print "."
+    sport, nSport = loadData('Dataset/sport/*'); print ".",
+    business, nBusiness = loadData('Dataset/business/*'); print ".",
+    politics, nPolitics = loadData('Dataset/politics/*'); print ".",
+    entertainment, nEntertainment = loadData('Dataset/entertainment/*'); print ".",
+    tech, nTech = loadData('Dataset/tech/*'); print "."
 
     print "Training .",
     # Prior
