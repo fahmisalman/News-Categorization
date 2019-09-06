@@ -43,7 +43,7 @@ def fit(x_train_tokens, y_train, max_tokens=5000, embedding_size=8, num_words=10
                         name='layer_embedding'))
     # model.add(GRU(units=16, return_sequences=True))
     # model.add(GRU(units=8, return_sequences=True))
-    model.add(GRU(units=4))
+    model.add(GRU(units=64))
     model.add(Dense(5, activation='softmax'))
     optimizer = Adam(lr=1e-3)
     model.compile(loss='binary_crossentropy',
@@ -72,8 +72,8 @@ def train():
         x_train.append(preprocessing(data[i][0]))
         y_train.append(label_cleansing(data[i][1]))
 
-    num_words = 100
-    max_tokens = 100
+    num_words = 10000
+    max_tokens = 1000
     embedding_size = 256
 
     tokenizer = Tokenizer(num_words=num_words)
