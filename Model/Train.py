@@ -52,7 +52,7 @@ def fit(x_train_tokens, y_train, max_tokens=5000, embedding_size=8, num_words=10
     y_train = np.array(y_train)
     if summary:
         print(model.summary())
-    model.fit(x_train_tokens, y_train, epochs=15)
+    model.fit(x_train_tokens, y_train, epochs=5)
     return model
 
 
@@ -87,3 +87,11 @@ def train():
                 embedding_size=embedding_size,
                 num_words=num_words,
                 summary=True)
+
+    # serialize model to JSON
+    model_json = model.to_json()
+    with open("model.json", "w") as json_file:
+        json_file.write(model_json)
+    # serialize weights to HDF5
+    model.save_weights("model.h5")
+    print("Saved model to disk")
